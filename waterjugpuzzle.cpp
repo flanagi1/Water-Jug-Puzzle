@@ -1,11 +1,3 @@
-/*******************************************************************************
- * Name          : waterjugpuzzle.cpp
- * Author        : Ian Flanagan
- * Pledge        : I pledge my honor that I have abided by the Stevens Honor System.
- * Date          : 3-16-25
- * Description   : Uses BFS to solve the water jug puzzle
- ******************************************************************************/
-
 #include <iostream>
 #include <tuple>
 #include <vector>
@@ -182,16 +174,6 @@ vector<tuple<int, int, int>> getNeighbors(const tuple<int, int, int>& state, int
     return neighbors;
 }
 
-/*void deleteAllNodes(Node* node) 
-{
-    if (node == nullptr) return;
-    // Recursively delete all child nodes
-    for (Node* child : node->children) {
-        deleteAllNodes(child);
-    }
-
-    delete node;
-}*/
 
 // Find the solution using BFS
 int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int capB, int capC, vector<string>& actions) {
@@ -226,7 +208,6 @@ int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int 
             }
 
             delete startNode;
-            //deleteAllNodes(startNode);
             return 0;
         }
 
