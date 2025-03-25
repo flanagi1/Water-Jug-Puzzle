@@ -7,6 +7,8 @@
 #include <sstream>
 using namespace std;
 
+
+//current->addCHild(newNode) in bool allvisted = true shit
 bool isInteger(const string& s) {
     for (char c : s) {
         if (!isdigit(c)) {
@@ -175,6 +177,7 @@ vector<tuple<int, int, int>> getNeighbors(const tuple<int, int, int>& state, int
 }
 
 
+vector<Node*> nodes;
 // Find the solution using BFS
 int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int capB, int capC, vector<string>& actions) {
     // Queue for BFS
@@ -183,6 +186,7 @@ int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int 
 
     // Create the start node and add to visited
     Node* startNode = new Node(start, "Initial state. (" + to_string(get<0>(start)) + ", " + to_string(get<1>(start)) + ", " + to_string(get<2>(start)) + ")");
+    nodes.push_back(startNode);
     q.push(startNode);
     addVisited(visited, start);
     
@@ -207,7 +211,8 @@ int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int 
                 path.pop();
             }
 
-            delete startNode;
+            //delete startNode;
+            //deleteAllNodes(startNode);
             return 0;
         }
 
@@ -215,23 +220,24 @@ int find(tuple<int, int, int> target, tuple<int, int, int> start, int capA, int 
         vector<string> actionsTemp;
         vector<tuple<int, int, int>> neighbors = getNeighbors(current->data, capA, capB, capC, actionsTemp);
 
-        bool allVisited = true;
+        //bool allVisited = true;
         for (size_t i = 0; i < neighbors.size(); ++i) {
             if (!isVisited(visited, neighbors[i])) {
                 // Create a new node for each valid state
                 Node* newNode = new Node(neighbors[i], actionsTemp[i]);
+                nodes.push_back(newNode);
                 newNode->prev = current;
                 q.push(newNode);
                 addVisited(visited, neighbors[i]);
-                allVisited = false;
+                //allVisited = false;
             }
         }
 
         actionsTemp.clear();
         neighbors.clear();
         
-        if (allVisited)
-            delete current;
+        //if (allVisited)
+            //delete current;
     }
 
     // If no solution is found
@@ -261,6 +267,10 @@ int main(int argc, char* argv[])
         else 
             cout << "No solution." << endl;
 
+        for(auto it : nodes)
+        {
+            delete it;
+        }
         return 0;
     }
 
